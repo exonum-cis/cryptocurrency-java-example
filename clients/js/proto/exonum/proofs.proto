@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package exonum.proofs;
+
+option java_package = "com.exonum.core.proofs";
+
+import "./merkledb/list_proof.proto";
+import "./merkledb/map_proof.proto";
+import "blockchain.proto";
+import "consensus.proto";
+
+message BlockProof {
+	exonum.Block block = 1;
+	repeated exonum.consensus.SignedMessage precommits = 2;
+}
+
+message ConfigChangeProof {
+	exonum.proof.ListProof configs_proof = 1;
+	exonum.proof.MapProof configs_index_proof = 2;
+	repeated BlockProof blocks_proofs = 3;
+}

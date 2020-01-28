@@ -1,0 +1,18 @@
+{
+  "name": "cryptocurrency-light-client-example",
+  "version": "0.1.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm i && npm run proto",
+    "proto": "pbjs --keep-case -t static-module ./proto/exonum/**.proto ./proto/service.proto -o ./proto/stubs.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "exonum-client-cis": "^0.17.4",
+    "protobufjs": "^6.8.8"
+  }
+}

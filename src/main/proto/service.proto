@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "com.exonum.binding.cryptocurrency";
+option java_outer_classname = "ServiceProtos";
+
+message Wallet {
+  int64 balance = 1;
+}
+
+message CreateWalletTx {
+  int64 initialBalance = 1;
+}
+
+message TransferTx {
+  int64 seed = 1;
+  bytes toWallet = 2;
+  int64 sum = 3;
+}
+
+

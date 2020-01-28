@@ -1,0 +1,55 @@
+# classes
+bin/
+
+# IDE files
+.classpath
+.project
+.settings
+
+# Intellij IDEA files
+.idea
+**/*.iml
+out/
+
+# macos files
+*.DS_Store
+
+# Rust stuff
+**/*.rs.bk
+.cargo/
+
+# Maven and Rust target dirs
+target/
+
+# Ignore Maven command-line configuration (we currently consider it as local).
+# See `mvn --help` for a list of flags to put in that file, and also
+# https://maven.apache.org/configure.html
+**/.mvn/maven.config
+
+*.log
+
+### Java template
+# Compiled class file
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# jenv configuration file
+**/.java-version
+
+# VS Code workspace configuration
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*/__pycache__/
+*.py[cod]
+*$py.class

@@ -1,0 +1,339 @@
+syntax = "proto3";
+
+package exonum.exonum_user;
+
+import "./exonum/crypto/types.proto";
+
+//---- DTO ---------------------------------------------------------------------
+
+//
+// Status.
+//
+
+// Status struct.
+message Status {
+	// The status name.
+	string name = 1;
+	// Optional status comment (for easy to use).
+	string comment = 2;
+	// User public keys.
+	repeated exonum.crypto.PublicKey user_keys = 3;
+}
+
+// Shallow status struct.
+message ShallowStatus {
+	// The status name.
+	string name = 1;
+	// Optional status comment (for easy to use).
+	string comment = 2;
+}
+
+//
+// User.
+//
+
+// User state structure.
+message UserState {
+	// User status name.
+	string status_name = 1;
+	// Transaction hashes.
+	repeated exonum.crypto.Hash tx_hashes = 2;
+}
+
+// Deep user state structure.
+message DeepUserState {
+	// User status.
+	ShallowStatus status = 1;
+	// Transaction hashes.
+	repeated exonum.crypto.Hash tx_hashes = 2;
+}
+
+// User structure.
+message User {
+	// User identifier (public key).
+	exonum.crypto.PublicKey key = 1;
+	// User meta info.
+	string info = 2;
+	// User state.
+	UserState state = 3;
+	// User profiles.
+	repeated exonum.crypto.Hash profile_keys = 4;
+}
+
+// Deep user structure.
+message DeepUser {
+	// User identifier (public key).
+	exonum.crypto.PublicKey key = 1;
+	// User meta info.
+	string info = 2;
+	// User state.
+	DeepUserState state = 3;
+	// User profiles.
+	map<string, DeepProfile> profiles = 4;
+}
+
+//
+// Role.
+//
+
+// Role struct.
+message Role {
+	// The role name.
+	string name = 1;
+	// Optional role comment (for easy to use).
+	string comment = 2;
+	// Profiles with states related to this role.
+	repeated exonum.crypto.Hash profile_keys = 3;
+}
+
+// Shallow role struct.
+message ShallowRole {
+	// The role name.
+	string name = 1;
+	// The role family.
+	string family = 2;
+	// Optional role comment (for easy to use).
+	string comment = 3;
+}
+
+//
+// Group.
+//
+
+// Group struct.
+message Group {
+	// The group name.
+	string name = 1;
+	// Optional group comment (for easy to use).
+	string comment = 2;
+	// Profiles with states related to this group.
+	repeated exonum.crypto.Hash profile_keys = 3;
+}
+
+// Shallow group struct.
+message ShallowGroup {
+	// The group name.
+	string name = 1;
+	// Optional group comment (for easy to use).
+	string comment = 2;
+}
+
+//
+// Profile.
+//
+
+// Profile state struct.
+message ProfileState {
+	// User role name.
+	string role_name = 1;
+	// User role family.
+	string role_family = 2;
+	// User group name.
+	string group_name = 3;
+}
+
+// API profile state struct.
+message DeepProfileState {
+	// User role.
+	ShallowRole role = 1;
+	// User group.
+	ShallowGroup group = 2;
+}
+
+// Profile struct.
+message Profile {
+	// Profile state struct.
+	ProfileState state = 1;
+	// User identifier.
+	exonum.crypto.PublicKey user_key = 2;
+}
+
+// API Profile struct.
+message DeepProfile {
+	// Profile state struct.
+	DeepProfileState state = 1;
+	// User identifier.
+	exonum.crypto.PublicKey user_key = 2;
+}
+
+//---- Transactions ------------------------------------------------------------
+
+//
+// Targets.
+//
+
+// Appends the service targets to the policy.
+message TxAppendTargets {
+	uint64 seed = 1;
+}
+
+//
+// Status.
+//
+
+// Creates a new status.
+message TxCreateStatus {
+	string status_name = 1;
+	string status_comment = 2;
+	uint64 seed = 3;
+}
+
+// Renames the status.
+message TxRenameStatus {
+	string status_name = 1;
+	string new_status_name = 2;
+	uint64 seed = 3;
+}
+
+// Updates the status comment.
+message TxUpdateStatusComment {
+	string status_name = 1;
+	string new_status_comment = 2;
+	uint64 seed = 3;
+}
+
+// Removes the status.
+message TxRemoveStatus {
+	string status_name = 1;
+	uint64 seed = 2;
+}
+
+//
+// User.
+//
+
+// Creates a new user.
+message TxCreateUser {
+	exonum.crypto.PublicKey user_key = 1;
+	string user_info = 2;
+	UserState user_state = 3;
+	uint64 seed = 4;
+}
+
+// Updates the user info.
+message TxUpdateUserInfo {
+	exonum.crypto.PublicKey user_key = 1;
+	string new_user_info = 2;
+	uint64 seed = 3;
+}
+
+// Updates the user state.
+message TxUpdateUserState {
+	exonum.crypto.PublicKey user_key = 1;
+	UserState new_user_state = 2;
+	uint64 seed = 3;
+}
+
+// Removes the user.
+message TxRemoveUser {
+	exonum.crypto.PublicKey user_key = 1;
+	uint64 seed = 2;
+}
+
+//
+// Role.
+//
+
+// Creates a new role.
+message TxCreateRole {
+	string role_name = 1;
+	string role_family = 2;
+	string role_comment = 3;
+	uint64 seed = 4;
+}
+
+// Renames the role.
+message TxRenameRole {
+	string role_name = 1;
+	string role_family = 2;
+	string new_role_name = 3;
+	string new_role_family = 4;
+	uint64 seed = 5;
+}
+
+// Updates the role comment.
+message TxUpdateRoleComment {
+	string role_name = 1;
+	string role_family = 2;
+	string new_role_comment = 3;
+	uint64 seed = 4;
+}
+
+// Removes the role.
+message TxRemoveRole {
+	string role_name = 1;
+	string role_family = 2;
+	uint64 seed = 3;
+}
+
+//
+// Group.
+//
+
+// Creates a new group.
+message TxCreateGroup {
+	string group_name = 1;
+	string group_comment = 2;
+	uint64 seed = 3;
+}
+
+// Renames the group.
+message TxRenameGroup {
+	string group_name = 1;
+	string new_group_name = 2;
+	uint64 seed = 3;
+}
+
+// Updates the group comment.
+message TxUpdateGroupComment {
+	string group_name = 1;
+	string new_group_comment = 2;
+	uint64 seed = 3;
+}
+
+// Removes the group.
+message TxRemoveGroup {
+	string group_name = 1;
+	uint64 seed = 2;
+}
+
+//
+// Profile.
+//
+
+// Creates a new profile.
+message TxCreateProfile {
+	ProfileState profile_state = 1;
+	exonum.crypto.PublicKey user_key = 2;
+	uint64 seed = 3;
+}
+
+// Updates the profile state.
+message TxUpdateProfileState {
+	exonum.crypto.Hash profile_key = 1;
+	ProfileState new_profile_state = 2;
+	uint64 seed = 3;
+}
+
+// Updates the user key.
+message TxUpdateProfileUserKey {
+	exonum.crypto.Hash profile_key = 1;
+	exonum.crypto.PublicKey new_user_key = 2;
+	uint64 seed = 3;
+}
+
+// Removes the profile.
+message TxRemoveProfile {
+	exonum.crypto.Hash profile_key = 1;
+	uint64 seed = 2;
+}
+
+//
+// Configuration.
+//
+
+// User configuration.
+message Config {
+	// Policy service instance name.
+	string policy_instance_name = 1;
+}
